@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import RouterTest from "./router/test.js";
+import RouterAuth from "./router/auth.router.js";
 
 const server = express();
 
@@ -16,6 +17,7 @@ server.get("/status", (req, res) => {
 });
 
 server.use(RouterTest);
+server.use(RouterAuth);
 
 server.listen(process.env.PORT, () => {
   console.log(`Server listen on port ${process.env.PORT}`);
