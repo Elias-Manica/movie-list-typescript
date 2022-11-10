@@ -12,7 +12,7 @@ server.use(express.json());
 
 dotenv.config();
 
-server.get("/status", (req, res) => {
+server.get("/status-server", (req, res) => {
   res.status(200).send({ msg: "tudo ok" });
 });
 

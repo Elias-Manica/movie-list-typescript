@@ -11,4 +11,18 @@ async function listGenres(): Promise<QueryResult<Genres>> {
   return response;
 }
 
-export { listGenres };
+async function listStatus(): Promise<QueryResult<Genres>> {
+  const response = await connection.query(`
+          SELECT * FROM status;
+      `);
+  return response;
+}
+
+async function listPlataforms(): Promise<QueryResult<Genres>> {
+  const response = await connection.query(`
+            SELECT * FROM plataforms;
+        `);
+  return response;
+}
+
+export { listGenres, listStatus, listPlataforms };
