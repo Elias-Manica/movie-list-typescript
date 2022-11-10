@@ -1,13 +1,18 @@
-import express from "express";
+import express, { Router } from "express";
 
-import { signUp } from "../controllers/auth.controller.js";
+import { signUp, signIn } from "../controllers/auth.controller.js";
 
-import { schemaSignUp } from "../schemas/auth.schemas.js";
+import {
+  signUpIsValid,
+  hadEmailUnique,
+  signInIsValid,
+  hadAccount,
+} from "../middleware/auth.middleware.js";
 
-import { hadEmailUnique } from "../middleware/auth.middleware.js";
+const router: Router = express.Router();
 
-const router = express.Router();
+router.post("/sign-up", signUpIsValid, hadEmailUnique, signUp);
 
-router.post("/sign-up", hadEmailUnique, signUp);
+router.post("/sign-in", signInIsValid, hadAccount, signIn);
 
 export default router;

@@ -1,9 +1,11 @@
-import express from "express";
+import express, { Router } from "express";
 
 import { getStatus } from "../controllers/teste.js";
 
-const router = express.Router();
+import { tokenIsValid } from "../middleware/auth.middleware.js";
 
-router.get("/movie-status", getStatus);
+const router: Router = express.Router();
+
+router.get("/movie-status", tokenIsValid, getStatus);
 
 export default router;
