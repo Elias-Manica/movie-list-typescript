@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { User, Token } from "../protocols/auth.protocols.js";
+import { User } from "../protocols/auth.protocols.js";
 
 import jwt from "jsonwebtoken";
 

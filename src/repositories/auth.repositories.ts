@@ -4,14 +4,18 @@ import connection from "../database/database.js";
 
 import { User, Token } from "../protocols/auth.protocols.js";
 
-async function createAccount(name: string, email: string, password: string) {
+async function createAccount(
+  name: string,
+  email: string,
+  password: string
+): Promise<QueryResult> {
   const response = await connection.query(
     `
     INSERT INTO users (name, email, password) VALUES ($1, $2, $3)
     `,
     [name, email, password]
   );
-  return response.rows;
+  return response;
 }
 
 async function hasUserWithEmail(email: string): Promise<QueryResult<User>> {

@@ -2,8 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import RouterTest from "./router/test.js";
 import RouterAuth from "./router/auth.router.js";
+import RouterMovies from "./router/movie.router.js";
 
 const server = express();
 
@@ -16,8 +16,8 @@ server.get("/status", (req, res) => {
   res.status(200).send({ msg: "tudo ok" });
 });
 
-server.use(RouterTest);
 server.use(RouterAuth);
+server.use(RouterMovies);
 
 server.listen(process.env.PORT, () => {
   console.log(`Server listen on port ${process.env.PORT}`);
