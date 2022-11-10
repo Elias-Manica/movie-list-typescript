@@ -4,8 +4,6 @@ import jwt from "jsonwebtoken";
 
 import bcrypt from "bcrypt";
 
-import { Token } from "../protocols/auth.protocols.js";
-
 import {
   hasUserWithEmail,
   selectSpecifyToken,
