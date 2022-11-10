@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 
 import bcrypt from "bcrypt";
 
+import { Token } from "../protocols/auth.protocols.js";
+
 import {
   hasUserWithEmail,
   selectSpecifyToken,
@@ -41,7 +43,7 @@ async function hadEmailUnique(req: Request, res: Response, next) {
 
     const response = await hasUserWithEmail(email);
 
-    const qtdUser: number = response.length;
+    const qtdUser: number = response.rows.length;
 
     if (qtdUser > 0) {
       res.status(409).send({ msg: "E-mail already registered" });
@@ -64,14 +66,14 @@ async function hadAccount(req: Request, res: Response, next) {
 
     const response = await hasUserWithEmail(email);
 
-    const qtdUser: number = response.length;
+    const qtdUser: number = response.rows.length;
 
     if (qtdUser === 0) {
       res.status(401).send({ msg: "E-mail and password incompatible!" });
       return;
     }
 
-    res.locals.response = response[0];
+    res.locals.response = response.rows[0];
 
     next();
   } catch (error) {
@@ -106,14 +108,9 @@ async function tokenIsValid(req: Request, res: Response, next) {
 
     console.log(userid, " verifytoken");
 
-    const response: {
-      id: number;
-      userid: number;
-      token: string;
-      active: boolean;
-    }[] = await selectSpecifyToken(userid);
+    const response = await selectSpecifyToken(userid);
 
-    if (response.length === 0) {
+    if (response.rows.length === 0) {
       res.sendStatus(401);
       return;
     }

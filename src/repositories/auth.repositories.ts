@@ -1,4 +1,8 @@
+import { QueryResult } from "pg";
+
 import connection from "../database/database.js";
+
+import { User, Token } from "../protocols/auth.protocols.js";
 
 async function createAccount(name: string, email: string, password: string) {
   const response = await connection.query(
@@ -10,17 +14,20 @@ async function createAccount(name: string, email: string, password: string) {
   return response.rows;
 }
 
-async function hasUserWithEmail(email: string) {
+async function hasUserWithEmail(email: string): Promise<QueryResult<User>> {
   const response = await connection.query(
     `
         SELECT * FROM users WHERE email = $1;
     `,
     [email]
   );
-  return response.rows;
+  return response;
 }
 
-async function createSession(userid: number, token: string) {
+async function createSession(
+  userid: number,
+  token: string
+): Promise<QueryResult> {
   const response = await connection.query(
     `
     INSERT INTO sessions ("userid", token) VALUES ($1, $2)
@@ -30,17 +37,20 @@ async function createSession(userid: number, token: string) {
   return response;
 }
 
-async function selectSpecifyToken(userid: number) {
+async function selectSpecifyToken(userid: number): Promise<QueryResult<Token>> {
   const response = await connection.query(
     `
     SELECT * FROM sessions WHERE userid = $1 AND "active" = true;
     `,
     [userid]
   );
-  return response.rows;
+  return response;
 }
 
-async function updateToken(token: string, userid: number) {
+async function updateToken(
+  token: string,
+  userid: number
+): Promise<QueryResult> {
   const response = await connection.query(
     `UPDATE sessions SET token=$1 WHERE userid = $2`,
     [token, userid]

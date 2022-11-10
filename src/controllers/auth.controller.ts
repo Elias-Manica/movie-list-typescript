@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 
+import { User, Token } from "../protocols/auth.protocols.js";
+
 import jwt from "jsonwebtoken";
 
 import {
@@ -25,12 +27,7 @@ async function signUp(req: Request, res: Response) {
 
 async function signIn(req: Request, res: Response) {
   try {
-    const response: {
-      id: number;
-      name: string;
-      email: string;
-      password: string;
-    } = res.locals.response;
+    const response: User = res.locals.response;
 
     const token: string = jwt.sign(
       {
@@ -39,16 +36,11 @@ async function signIn(req: Request, res: Response) {
       "palavra_secreta"
     );
 
-    const hasToken: {
-      id: number;
-      userid: number;
-      token: string;
-      active: boolean;
-    }[] = await selectSpecifyToken(response.id);
+    const hasToken = await selectSpecifyToken(response.id);
 
     console.log(hasToken);
 
-    if (hasToken.length === 0) {
+    if (hasToken.rows.length === 0) {
       await createSession(response.id, token);
 
       res.send({ token: `${token}` });
