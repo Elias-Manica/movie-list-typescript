@@ -9,6 +9,7 @@ import {
   createMovieWithGrade,
   createMovieWithGradeOnly,
   createMovieWithNoteOnly,
+  deleteMovieById,
 } from "../repositories/movies.repositories.js";
 
 async function listAllGenres(req: Request, res: Response) {
@@ -119,10 +120,21 @@ async function insertMovie(req: Request, res: Response) {
   }
 }
 
+async function deleteMovie(req: Request, res: Response) {
+  try {
+    const number: number = Number(req.params.id);
+    await deleteMovieById(number);
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(500).send({ msg: "Error in server!" });
+  }
+}
+
 export {
   listAllGenres,
   listAllStatus,
   listAllPlataforms,
   listMovies,
   insertMovie,
+  deleteMovie,
 };

@@ -13,8 +13,19 @@ type Movie = {
   note: null | string;
 };
 
+type JustMovie = {
+  id: number;
+  name: string;
+  plataform: number;
+  genre: number;
+  status: number;
+  grade: null | number;
+  note: null | string;
+  userid: number;
+};
+
 type MovieWithOutGrade = Omit<Movie, "id" | "grade" | "note">;
 
 type MovieWithGrade = Omit<Movie, "id">;
 
-export { Genres, Movie, MovieWithOutGrade, MovieWithGrade };
+export { Genres, Movie, MovieWithOutGrade, MovieWithGrade, JustMovie };

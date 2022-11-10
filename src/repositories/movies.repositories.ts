@@ -2,7 +2,7 @@ import connection from "../database/database.js";
 
 import { QueryResult } from "pg";
 
-import { Genres, Movie } from "../protocols/movies.protocols.js";
+import { Genres, JustMovie, Movie } from "../protocols/movies.protocols.js";
 
 async function listGenres(): Promise<QueryResult<Genres>> {
   const response = await connection.query(`
@@ -132,6 +132,21 @@ async function plataformIsValid(
   return response;
 }
 
+async function listMovieById(movieId: number): Promise<QueryResult<JustMovie>> {
+  const response = await connection.query(
+    `SELECT * FROM movies WHERE id = $1;`,
+    [movieId]
+  );
+  return response;
+}
+
+async function deleteMovieById(movieId: number): Promise<QueryResult> {
+  const response = await connection.query(`DELETE FROM movies WHERE id = $1;`, [
+    movieId,
+  ]);
+  return response;
+}
+
 export {
   listGenres,
   listStatus,
@@ -144,4 +159,6 @@ export {
   createMovieWithGrade,
   createMovieWithGradeOnly,
   createMovieWithNoteOnly,
+  deleteMovieById,
+  listMovieById,
 };

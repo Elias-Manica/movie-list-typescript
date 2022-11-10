@@ -4,6 +4,7 @@ import { schemaMovie } from "../schemas/movies.schemas.js";
 
 import {
   genreIsValid,
+  listMovieById,
   plataformIsValid,
   statusIsValid,
 } from "../repositories/movies.repositories.js";
@@ -54,4 +55,35 @@ async function bodyIsValid(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export { movieIsValid, bodyIsValid };
+async function hasMovie(req: Request, res: Response, next: NextFunction) {
+  if (!Number(req.params.id)) {
+    res.status(400).send({ msg: "Send a valid number!" });
+    return;
+  }
+
+  const number: number = Number(req.params.id);
+
+  try {
+    const response = await listMovieById(number);
+
+    if (response.rows.length === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const userid = res.locals.userid;
+
+    if (response.rows[0].userid !== userid) {
+      res
+        .status(401)
+        .send({ msg: "You dont have acess to delete this movie rate!" });
+      return;
+    }
+
+    next();
+  } catch (error) {
+    res.status(500).send({ msg: "Error in server!" });
+  }
+}
+
+export { movieIsValid, bodyIsValid, hasMovie };
