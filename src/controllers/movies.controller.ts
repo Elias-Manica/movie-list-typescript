@@ -6,6 +6,9 @@ import {
   listPlataforms,
   listMoviesAvaible,
   createMovie,
+  createMovieWithGrade,
+  createMovieWithGradeOnly,
+  createMovieWithNoteOnly,
 } from "../repositories/movies.repositories.js";
 
 async function listAllGenres(req: Request, res: Response) {
@@ -51,6 +54,8 @@ async function insertMovie(req: Request, res: Response) {
 
     const grade: null | number = req.body.grade;
 
+    const note: null | string = req.body.note;
+
     const name: string = req.body.name;
 
     const plataform: number = req.body.plataform;
@@ -59,15 +64,52 @@ async function insertMovie(req: Request, res: Response) {
 
     const statusmovie: number = req.body.statusmovie;
 
-    if (!grade) {
+    if (!grade && !note && grade !== 0) {
       await createMovie(name, plataform, genre, statusmovie, userid);
-      res.send(201);
+      res.sendStatus(201);
+
       return;
     }
 
-    //fazer caso a pessoa já mande com nota
+    if (!note) {
+      await createMovieWithGradeOnly(
+        name,
+        plataform,
+        genre,
+        statusmovie,
+        grade,
+        userid
+      );
+      res.sendStatus(201);
 
-    res.send(200);
+      return;
+    }
+
+    if (!grade && grade !== 0) {
+      await createMovieWithNoteOnly(
+        name,
+        plataform,
+        genre,
+        statusmovie,
+        note,
+        userid
+      );
+      res.sendStatus(201);
+
+      return;
+    }
+
+    await createMovieWithGrade(
+      name,
+      plataform,
+      genre,
+      statusmovie,
+      grade,
+      note,
+      userid
+    );
+
+    res.sendStatus(201);
   } catch (error) {
     res.status(500).send({ msg: "Error in server!" });
   }

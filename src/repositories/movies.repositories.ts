@@ -54,6 +54,58 @@ async function createMovie(
   return response;
 }
 
+async function createMovieWithGrade(
+  name: string,
+  plataform: number,
+  genre: number,
+  statusmovie: number,
+  grade: number,
+  note: string,
+  userid: number
+): Promise<QueryResult> {
+  const response = await connection.query(
+    `
+        INSERT INTO movies (name, plataform, genre, statusmovie, grade, note, userid) VALUES ($1, $2, $3, $4, $5, $6, $7)
+        `,
+    [name, plataform, genre, statusmovie, grade, note, userid]
+  );
+  return response;
+}
+
+async function createMovieWithGradeOnly(
+  name: string,
+  plataform: number,
+  genre: number,
+  statusmovie: number,
+  grade: number,
+  userid: number
+): Promise<QueryResult> {
+  const response = await connection.query(
+    `
+    INSERT INTO movies (name, plataform, genre, statusmovie, grade, userid) VALUES ($1, $2, $3, $4, $5, $6)
+    `,
+    [name, plataform, genre, statusmovie, grade, userid]
+  );
+  return response;
+}
+
+async function createMovieWithNoteOnly(
+  name: string,
+  plataform: number,
+  genre: number,
+  statusmovie: number,
+  note: string,
+  userid: number
+): Promise<QueryResult> {
+  const response = await connection.query(
+    `
+    INSERT INTO movies (name, plataform, genre, statusmovie, note, userid) VALUES ($1, $2, $3, $4, $5, $6)
+    `,
+    [name, plataform, genre, statusmovie, note, userid]
+  );
+  return response;
+}
+
 async function genreIsValid(genreid: number): Promise<QueryResult<Genres>> {
   const response = await connection.query(
     `SELECT * FROM genres WHERE id = $1;`,
@@ -89,4 +141,7 @@ export {
   genreIsValid,
   statusIsValid,
   plataformIsValid,
+  createMovieWithGrade,
+  createMovieWithGradeOnly,
+  createMovieWithNoteOnly,
 };

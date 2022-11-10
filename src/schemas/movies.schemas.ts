@@ -8,7 +8,7 @@ const schemaMovie = Joi.object({
   plataform: Joi.number().required().empty(""),
   genre: Joi.number().required().empty(""),
   statusmovie: Joi.number().required().empty(""),
-  grade: Joi.number().empty(),
+  grade: Joi.number().empty().max(10).min(0),
   note: Joi.string().empty(""),
 });
 
