@@ -64,14 +64,14 @@ async function insertMovie(req: Request, res: Response) {
 
     const statusmovie: number = req.body.statusmovie;
 
-    if (!grade && !note && grade !== 0) {
+    if (!grade && !note && grade !== 0 && statusmovie === 2) {
       await createMovie(name, plataform, genre, statusmovie, userid);
       res.sendStatus(201);
 
       return;
     }
 
-    if (!note) {
+    if (!note && statusmovie === 1) {
       await createMovieWithGradeOnly(
         name,
         plataform,
@@ -85,7 +85,7 @@ async function insertMovie(req: Request, res: Response) {
       return;
     }
 
-    if (!grade && grade !== 0) {
+    if (!grade && grade !== 0 && statusmovie === 1) {
       await createMovieWithNoteOnly(
         name,
         plataform,
@@ -99,17 +99,21 @@ async function insertMovie(req: Request, res: Response) {
       return;
     }
 
-    await createMovieWithGrade(
-      name,
-      plataform,
-      genre,
-      statusmovie,
-      grade,
-      note,
-      userid
-    );
+    if ((grade || grade === 0) && note && statusmovie === 1) {
+      await createMovieWithGrade(
+        name,
+        plataform,
+        genre,
+        statusmovie,
+        grade,
+        note,
+        userid
+      );
 
-    res.sendStatus(201);
+      res.sendStatus(201);
+      return;
+    }
+    res.status(400).send({ msg: "Watch the movie before rating!" });
   } catch (error) {
     res.status(500).send({ msg: "Error in server!" });
   }
