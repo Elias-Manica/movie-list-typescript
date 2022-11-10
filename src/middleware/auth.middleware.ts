@@ -106,14 +106,14 @@ async function tokenIsValid(req: Request, res: Response, next) {
       return;
     }
 
-    console.log(userid, " verifytoken");
-
     const response = await selectSpecifyToken(userid);
 
     if (response.rows.length === 0) {
       res.sendStatus(401);
       return;
     }
+
+    res.locals.userid = userid;
 
     next();
   } catch (error) {

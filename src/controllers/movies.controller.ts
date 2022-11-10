@@ -4,6 +4,7 @@ import {
   listGenres,
   listStatus,
   listPlataforms,
+  listMoviesAvaible,
 } from "../repositories/movies.repositories.js";
 
 async function listAllGenres(req: Request, res: Response) {
@@ -33,4 +34,14 @@ async function listAllPlataforms(req: Request, res: Response) {
   }
 }
 
-export { listAllGenres, listAllStatus, listAllPlataforms };
+async function listMovies(req: Request, res: Response) {
+  try {
+    const userid: number = res.locals.userid;
+    const response = await listMoviesAvaible(userid);
+    res.send(response.rows);
+  } catch (error) {
+    res.status(500).send({ msg: "Error in server!" });
+  }
+}
+
+export { listAllGenres, listAllStatus, listAllPlataforms, listMovies };

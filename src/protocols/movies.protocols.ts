@@ -3,4 +3,14 @@ type Genres = {
   name: string;
 };
 
-export { Genres };
+type Movie = {
+  id: number;
+  name: string;
+  plataform: string;
+  genre: string;
+  status: string;
+  grade: null | number;
+  note: null | string;
+};
+
+export { Genres, Movie };
