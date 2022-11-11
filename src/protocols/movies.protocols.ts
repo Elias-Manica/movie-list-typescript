@@ -24,8 +24,20 @@ type JustMovie = {
   userid: number;
 };
 
+type QtdMovie = {
+  name: string;
+  qtd: number;
+};
+
 type MovieWithOutGrade = Omit<Movie, "id" | "grade" | "note">;
 
 type MovieWithGrade = Omit<Movie, "id">;
 
-export { Genres, Movie, MovieWithOutGrade, MovieWithGrade, JustMovie };
+export {
+  Genres,
+  Movie,
+  MovieWithOutGrade,
+  MovieWithGrade,
+  JustMovie,
+  QtdMovie,
+};

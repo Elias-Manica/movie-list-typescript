@@ -2,7 +2,12 @@ import connection from "../database/database.js";
 
 import { QueryResult } from "pg";
 
-import { Genres, JustMovie, Movie } from "../protocols/movies.protocols.js";
+import {
+  Genres,
+  JustMovie,
+  Movie,
+  QtdMovie,
+} from "../protocols/movies.protocols.js";
 
 async function listGenres(): Promise<QueryResult<Genres>> {
   const response = await connection.query(`
@@ -178,6 +183,24 @@ async function updateGradeAndNote(
   return response;
 }
 
+async function countMovieByPlataform(): Promise<QueryResult<QtdMovie>> {
+  const response = await connection.query(`
+    SELECT plataforms.name, COUNT(movies.id) AS "qtd" FROM movies 
+    LEFT JOIN plataforms on plataforms.id = movies.plataform 
+    GROUP BY plataforms.name
+    `);
+  return response;
+}
+
+async function countMovieByGenre(): Promise<QueryResult<QtdMovie>> {
+  const response = await connection.query(`
+    SELECT genres.name, COUNT(movies.id) AS "qtd" FROM movies 
+    LEFT JOIN genres on genres.id = movies.genre 
+    GROUP BY genres.name
+      `);
+  return response;
+}
+
 export {
   listGenres,
   listStatus,
@@ -195,4 +218,6 @@ export {
   updateGrade,
   updateNote,
   updateGradeAndNote,
+  countMovieByPlataform,
+  countMovieByGenre,
 };

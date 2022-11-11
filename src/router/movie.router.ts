@@ -7,6 +7,8 @@ import {
   listAllPlataforms,
   listAllStatus,
   listMovies,
+  listMoviesByGenre,
+  listMoviesByPlataform,
   updateMovie,
 } from "../controllers/movies.controller.js";
 
@@ -34,5 +36,9 @@ router.post("/movies", tokenIsValid, movieIsValid, bodyIsValid, insertMovie);
 router.delete("/movies/:id", tokenIsValid, hasMovie, deleteMovie);
 
 router.put("/movies/:id", tokenIsValid, updateIsValid, hasMovie, updateMovie);
+
+router.get("/movies-plataforms", listMoviesByPlataform);
+
+router.get("/movies-genres", listMoviesByGenre);
 
 export default router;

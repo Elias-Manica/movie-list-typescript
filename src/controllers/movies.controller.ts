@@ -13,6 +13,8 @@ import {
   updateGradeAndNote,
   updateGrade,
   updateNote,
+  countMovieByPlataform,
+  countMovieByGenre,
 } from "../repositories/movies.repositories.js";
 
 async function listAllGenres(req: Request, res: Response) {
@@ -161,6 +163,24 @@ async function updateMovie(req: Request, res: Response) {
   }
 }
 
+async function listMoviesByPlataform(req: Request, res: Response) {
+  try {
+    const response = await countMovieByPlataform();
+    res.status(200).send(response.rows);
+  } catch (error) {
+    res.status(500).send({ msg: "Error in server!" });
+  }
+}
+
+async function listMoviesByGenre(req: Request, res: Response) {
+  try {
+    const response = await countMovieByGenre();
+    res.status(200).send(response.rows);
+  } catch (error) {
+    res.status(500).send({ msg: "Error in server!" });
+  }
+}
+
 export {
   listAllGenres,
   listAllStatus,
@@ -169,4 +189,6 @@ export {
   insertMovie,
   deleteMovie,
   updateMovie,
+  listMoviesByPlataform,
+  listMoviesByGenre,
 };
