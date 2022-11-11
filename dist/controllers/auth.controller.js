@@ -34,19 +34,64 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { test } from "../repositories/test.js";
-function getStatus(req, res) {
+import jwt from "jsonwebtoken";
+import { createAccount, createSession, selectSpecifyToken, updateToken, } from "../repositories/auth.repositories.js";
+function signUp(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var result;
+        var name_1, email, passwordEncrypted, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, test()];
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    name_1 = req.body.name;
+                    email = req.body.email;
+                    passwordEncrypted = res.locals.passwordEncrypted;
+                    return [4 /*yield*/, createAccount(name_1, email, passwordEncrypted)];
                 case 1:
-                    result = _a.sent();
-                    res.send(result);
-                    return [2 /*return*/];
+                    _a.sent();
+                    res.status(201).send({ msg: "Account created!" });
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_1 = _a.sent();
+                    res.status(500).send({ msg: "Error in server!" });
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });
 }
-export { getStatus };
+function signIn(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response, token, hasToken, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 5, , 6]);
+                    response = res.locals.response;
+                    token = jwt.sign({
+                        userid: response.id
+                    }, "palavra_secreta");
+                    return [4 /*yield*/, selectSpecifyToken(response.id)];
+                case 1:
+                    hasToken = _a.sent();
+                    if (!(hasToken.rows.length === 0)) return [3 /*break*/, 3];
+                    return [4 /*yield*/, createSession(response.id, token)];
+                case 2:
+                    _a.sent();
+                    res.send({ token: "".concat(token) });
+                    return [2 /*return*/];
+                case 3: return [4 /*yield*/, updateToken(token, response.id)];
+                case 4:
+                    _a.sent();
+                    res.send({ token: "".concat(token) });
+                    return [3 /*break*/, 6];
+                case 5:
+                    error_2 = _a.sent();
+                    res.status(500).send({ msg: "Error in server!" });
+                    return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
+            }
+        });
+    });
+}
+export { signUp, signIn };

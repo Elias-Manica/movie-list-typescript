@@ -35,12 +35,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import connection from "../database/database.js";
-function test() {
+function createAccount(name, email, password) {
     return __awaiter(this, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, connection.query("SELECT * FROM status;")];
+                case 0: return [4 /*yield*/, connection.query("\n    INSERT INTO users (name, email, password) VALUES ($1, $2, $3)\n    ", [name, email, password])];
                 case 1:
                     response = _a.sent();
                     return [2 /*return*/, response];
@@ -48,4 +48,56 @@ function test() {
         });
     });
 }
-export { test };
+function hasUserWithEmail(email) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, connection.query("\n        SELECT * FROM users WHERE email = $1;\n    ", [email])];
+                case 1:
+                    response = _a.sent();
+                    return [2 /*return*/, response];
+            }
+        });
+    });
+}
+function createSession(userid, token) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, connection.query("\n    INSERT INTO sessions (\"userid\", token) VALUES ($1, $2)\n    ", [userid, token])];
+                case 1:
+                    response = _a.sent();
+                    return [2 /*return*/, response];
+            }
+        });
+    });
+}
+function selectSpecifyToken(userid) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, connection.query("\n    SELECT * FROM sessions WHERE userid = $1 AND \"active\" = true;\n    ", [userid])];
+                case 1:
+                    response = _a.sent();
+                    return [2 /*return*/, response];
+            }
+        });
+    });
+}
+function updateToken(token, userid) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, connection.query("UPDATE sessions SET token=$1 WHERE userid = $2", [token, userid])];
+                case 1:
+                    response = _a.sent();
+                    return [2 /*return*/, response];
+            }
+        });
+    });
+}
+export { createAccount, hasUserWithEmail, createSession, selectSpecifyToken, updateToken, };
