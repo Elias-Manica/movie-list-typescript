@@ -138,6 +138,46 @@ response:
   ]	
 ```
 
+| Function        | method | Endpoint       |
+| --------------| ------ | -------------- |
+| **List quantity movies by plataform**     | GET   | `/movies-plataforms`       |
+
+response:
+
+
+```json
+[
+	{
+		"name": "Amazon",
+		"qtd": "1"
+	},
+	{
+		"name": "Netflix",
+		"qtd": "3"
+	}
+]	
+```
+
+| Function        | method | Endpoint       |
+| --------------| ------ | -------------- |
+| **List quantity movies by genres**     | GET   | `/movies-genres`       |
+
+response:
+
+
+```json
+[
+	{
+		"name": "comédia",
+		"qtd": "3"
+	},
+	{
+		"name": "terror",
+		"qtd": "1"
+	}
+]
+```
+
 
 | Function        | method | Endpoint       |
 | --------------| ------ | -------------- |
