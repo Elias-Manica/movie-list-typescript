@@ -152,6 +152,8 @@ response:
 | **grade**        | number(optional)                     |
 | **note**        | string(optional)                     |
 
+## required pass bearer token  in headers
+
 request:
 
 ```json
@@ -161,4 +163,46 @@ request:
 	"genre": 12,
 	"statusmovie": 2
 }
+```
+
+| Function        | method | Endpoint       |
+| --------------| ------ | -------------- |
+| **Delete a movie in your list**     | DELETE   | `/movies/:id`       |
+
+## required pass bearer token  in headers
+
+| Function        | method | Endpoint       |
+| --------------| ------ | -------------- |
+| **Update grade or note movie in your list**     | PUT   | `/movies/:id`       |
+
+## required pass bearer token  in headers
+
+```json
+  {
+	"grade": 8,
+	"note": "movie boring" 
+}
+```
+
+| Function        | method | Endpoint       |
+| --------------| ------ | -------------- |
+| **List your movies**     | GET   | `/movies`       |
+
+## required pass bearer token  in headers
+
+response:
+
+
+```json
+ [
+	{
+		"id": 26,
+		"name": "Annabele",
+		"plataform": "Netflix",
+		"genre": "terror",
+		"status": "Watched",
+		"grade": null,
+		"note": "very bad"
+	}
+  ]	
 ```
