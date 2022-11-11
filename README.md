@@ -39,7 +39,7 @@ request:
 
 ```json
   {
-   "name": "lele",
+   	"name": "lele",
 	"email": "lele@gmail.com", 
 	"password": "123"
   }
@@ -59,7 +59,6 @@ request:
 
 ```json
   {
-   "name": "lele",
 	"email": "lele@gmail.com", 
 	"password": "123"
   }
