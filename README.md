@@ -55,8 +55,6 @@ request:
 | **password**        | string(required)                     |
 
 
-### Example
-
 request:
 
 ```json
@@ -74,4 +72,93 @@ response:
   {
    	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjYsImlhdCI6MTY2ODEyNzYwOX0.WP4gIfMfsCNAOSvyAQFI2QPfIO52VBN5UNMOjECvx2p"
   }
+```
+
+| Function        | method | Endpoint       |
+| --------------| ------ | -------------- |
+| **List Genres**     | GET   | `/genres`       |
+
+response:
+
+
+```json
+ [
+	{
+		"id": 1,
+		"name": "ação"
+	},
+	{
+		"id": 2,
+		"name": "aventura"
+	},
+	.
+	.
+	.
+  ]	
+```
+
+| Function        | method | Endpoint       |
+| --------------| ------ | -------------- |
+| **List Status**     | GET   | `/status`       |
+
+response:
+
+
+```json
+ [
+	{
+		"id": 1,
+		"name": "Watched"
+	},
+	{
+		"id": 2,
+		"name": "Dont watched"
+	}
+  ]	
+```
+
+
+| Function        | method | Endpoint       |
+| --------------| ------ | -------------- |
+| **List Plataforms**     | GET   | `/plataforms`       |
+
+response:
+
+
+```json
+ [
+	{
+		"id": 1,
+		"name": "Netflix"
+	},
+	{
+		"id": 2,
+		"name": "Amazon"
+	}
+  ]	
+```
+
+
+| Function        | method | Endpoint       |
+| --------------| ------ | -------------- |
+| **Post a movie in your list**     | POST   | `/movies`       |
+
+| Body               | Type                                 |
+| --------------------| ------------------------------------ |
+| **name**           | string(required)                     |
+| **plataform**        | number(required)                     |
+| **genre**        | number(required)                     |
+| **statusmovie**        | number(required)                     |
+| **grade**        | number(optional)                     |
+| **note**        | string(optional)                     |
+
+request:
+
+```json
+  {
+	"name": "Annabele",
+	"plataform": 1,
+	"genre": 12,
+	"statusmovie": 2
+}
 ```
