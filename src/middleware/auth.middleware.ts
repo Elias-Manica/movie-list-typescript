@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 import jwt from "jsonwebtoken";
 
@@ -23,7 +23,7 @@ async function signUpIsValid(req: Request, res: Response, next) {
   next();
 }
 
-async function signInIsValid(req: Request, res: Response, next) {
+async function signInIsValid(req: Request, res: Response, next: NextFunction) {
   const isValid = schemaSignIn.validate(req.body, { abortEarly: false });
 
   if (isValid.error) {
@@ -35,7 +35,7 @@ async function signInIsValid(req: Request, res: Response, next) {
   next();
 }
 
-async function hadEmailUnique(req: Request, res: Response, next) {
+async function hadEmailUnique(req: Request, res: Response, next: NextFunction) {
   try {
     const email: string = req.body.email;
 
@@ -58,7 +58,7 @@ async function hadEmailUnique(req: Request, res: Response, next) {
   }
 }
 
-async function hadAccount(req: Request, res: Response, next) {
+async function hadAccount(req: Request, res: Response, next: NextFunction) {
   try {
     const email: string = req.body.email;
 
@@ -79,7 +79,7 @@ async function hadAccount(req: Request, res: Response, next) {
   }
 }
 
-async function tokenIsValid(req: Request, res: Response, next) {
+async function tokenIsValid(req: Request, res: Response, next: NextFunction) {
   try {
     const token: string = req.headers.authorization?.replace("Bearer ", "");
 

@@ -144,14 +144,14 @@ async function updateMovie(req: Request, res: Response) {
 
     if ((grade || grade === 0) && note) {
       await updateGradeAndNote(grade, note, movieid);
-      res.send(204);
+      res.sendStatus(204);
 
       return;
     }
 
     if (grade || grade === 0) {
       await updateGrade(grade, movieid);
-      res.send(204);
+      res.sendStatus(204);
 
       return;
     }

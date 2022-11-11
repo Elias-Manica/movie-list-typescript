@@ -157,7 +157,7 @@ async function updateGrade(
   movieId: number
 ): Promise<QueryResult> {
   const response = await connection.query(
-    `UPDATE movies SET grade = $1 WHERE id = $2`,
+    `UPDATE movies SET grade = $1, statusmovie=1 WHERE id = $2`,
     [grade, movieId]
   );
   return response;
@@ -165,7 +165,7 @@ async function updateGrade(
 
 async function updateNote(note: string, movieId: number): Promise<QueryResult> {
   const response = await connection.query(
-    `UPDATE movies SET note = $1 WHERE id = $2`,
+    `UPDATE movies SET note = $1, statusmovie=1 WHERE id = $2`,
     [note, movieId]
   );
   return response;
@@ -177,7 +177,7 @@ async function updateGradeAndNote(
   movieId: number
 ): Promise<QueryResult> {
   const response = await connection.query(
-    `UPDATE movies SET grade = $1, note=$2 WHERE id = $3`,
+    `UPDATE movies SET grade = $1, note=$2, statusmovie=1 WHERE id = $3`,
     [grade, note, movieId]
   );
   return response;

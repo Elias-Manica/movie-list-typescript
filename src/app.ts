@@ -12,10 +12,6 @@ server.use(express.json());
 
 dotenv.config();
 
-server.get("/status-server", (req, res) => {
-  res.status(200).send({ msg: "tudo ok" });
-});
-
 server.use(RouterAuth);
 server.use(RouterMovies);
 

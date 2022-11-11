@@ -20,7 +20,6 @@ async function signUp(req: Request, res: Response) {
     await createAccount(name, email, passwordEncrypted);
     res.status(201).send({ msg: "Account created!" });
   } catch (error) {
-    console.log(error);
     res.status(500).send({ msg: "Error in server!" });
   }
 }
@@ -38,8 +37,6 @@ async function signIn(req: Request, res: Response) {
 
     const hasToken = await selectSpecifyToken(response.id);
 
-    console.log(hasToken);
-
     if (hasToken.rows.length === 0) {
       await createSession(response.id, token);
 
@@ -51,7 +48,6 @@ async function signIn(req: Request, res: Response) {
 
     res.send({ token: `${token}` });
   } catch (error) {
-    console.log(error);
     res.status(500).send({ msg: "Error in server!" });
   }
 }
