@@ -12,7 +12,7 @@ My first project practicing typescript
 npm i
 ```
 
-3. Create a PostgreSQL database with whatever name you want
+3. Run the dump or create a PostgreSQL database with whatever name you want 
 4. Configure the `.env` file using the `.env.example` file 
 
 ## Start the project
