@@ -10,6 +10,9 @@ import {
   createMovieWithGradeOnly,
   createMovieWithNoteOnly,
   deleteMovieById,
+  updateGradeAndNote,
+  updateGrade,
+  updateNote,
 } from "../repositories/movies.repositories.js";
 
 async function listAllGenres(req: Request, res: Response) {
@@ -130,6 +133,34 @@ async function deleteMovie(req: Request, res: Response) {
   }
 }
 
+async function updateMovie(req: Request, res: Response) {
+  try {
+    const movieid: number = Number(req.params.id);
+
+    const note: string = req.body?.note;
+    const grade: number = req.body.grade;
+
+    if ((grade || grade === 0) && note) {
+      await updateGradeAndNote(grade, note, movieid);
+      res.send(204);
+
+      return;
+    }
+
+    if (grade || grade === 0) {
+      await updateGrade(grade, movieid);
+      res.send(204);
+
+      return;
+    }
+    await updateNote(note, movieid);
+
+    res.send(204);
+  } catch (error) {
+    res.status(500).send({ msg: "Error in server!" });
+  }
+}
+
 export {
   listAllGenres,
   listAllStatus,
@@ -137,4 +168,5 @@ export {
   listMovies,
   insertMovie,
   deleteMovie,
+  updateMovie,
 };

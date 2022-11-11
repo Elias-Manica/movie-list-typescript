@@ -12,4 +12,9 @@ const schemaMovie = Joi.object({
   note: Joi.string().empty(""),
 });
 
-export { schemaMovie };
+const schemaUpdateMovie = Joi.object({
+  grade: Joi.number().empty().max(10).min(0),
+  note: Joi.string().empty(""),
+});
+
+export { schemaMovie, schemaUpdateMovie };

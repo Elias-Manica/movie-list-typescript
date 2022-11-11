@@ -147,6 +147,37 @@ async function deleteMovieById(movieId: number): Promise<QueryResult> {
   return response;
 }
 
+async function updateGrade(
+  grade: number,
+  movieId: number
+): Promise<QueryResult> {
+  const response = await connection.query(
+    `UPDATE movies SET grade = $1 WHERE id = $2`,
+    [grade, movieId]
+  );
+  return response;
+}
+
+async function updateNote(note: string, movieId: number): Promise<QueryResult> {
+  const response = await connection.query(
+    `UPDATE movies SET note = $1 WHERE id = $2`,
+    [note, movieId]
+  );
+  return response;
+}
+
+async function updateGradeAndNote(
+  grade: number,
+  note: string,
+  movieId: number
+): Promise<QueryResult> {
+  const response = await connection.query(
+    `UPDATE movies SET grade = $1, note=$2 WHERE id = $3`,
+    [grade, note, movieId]
+  );
+  return response;
+}
+
 export {
   listGenres,
   listStatus,
@@ -161,4 +192,7 @@ export {
   createMovieWithNoteOnly,
   deleteMovieById,
   listMovieById,
+  updateGrade,
+  updateNote,
+  updateGradeAndNote,
 };

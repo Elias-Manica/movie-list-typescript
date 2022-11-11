@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import { schemaMovie } from "../schemas/movies.schemas.js";
+import { schemaMovie, schemaUpdateMovie } from "../schemas/movies.schemas.js";
 
 import {
   genreIsValid,
@@ -11,6 +11,26 @@ import {
 
 async function movieIsValid(req: Request, res: Response, next: NextFunction) {
   const isValid = schemaMovie.validate(req.body, { abortEarly: false });
+
+  if (isValid.error) {
+    const error = isValid.error.details.map((erro) => erro.message);
+    res.status(422).send(error);
+    return;
+  }
+
+  next();
+}
+
+async function updateIsValid(req: Request, res: Response, next: NextFunction) {
+  const note: string = req.body?.note;
+  const grade: number = req.body?.grade;
+
+  if (!note && !grade && grade !== 0) {
+    res.status(400).send({ msg: "update the grade or the note of movie" });
+    return;
+  }
+
+  const isValid = schemaUpdateMovie.validate(req.body, { abortEarly: false });
 
   if (isValid.error) {
     const error = isValid.error.details.map((erro) => erro.message);
@@ -86,4 +106,4 @@ async function hasMovie(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export { movieIsValid, bodyIsValid, hasMovie };
+export { movieIsValid, bodyIsValid, hasMovie, updateIsValid };
